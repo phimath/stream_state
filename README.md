@@ -16,6 +16,8 @@ If you're used to programming UIs in an imperative style (Qt for example), this 
 
 
 ## How to use
+>The included counter example manages 2 pieces of state, an `int` `counter` that stores how many times we have pressed a button, and a `bool` `useRedText` that says if we should display the counter using red text or not, updated by a checkbox at the top of the screen. 
+
 
 For each piece of state that you want to manage, create a `StreamState` object with an initial value. Each `StreamState` object can manage state of any type, including custom classes:
 
