@@ -7,7 +7,8 @@ class AppManager {
   factory AppManager() => _singleton;
   AppManager._internal();
 
-  StreamState counter = StreamState<int>(initial: 0);
+  var counter = StreamState<int>(initial: 0);
+  var useRedText = StreamState<bool>(initial: true);
 }
 
 void main() {
@@ -33,7 +34,23 @@ class StreamStateExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('StreamState Example Counter'),
+        title: Text('StreamState Example Counter!'),
+        actions: [
+          Row(
+            children: [
+              Text(
+                'Use Red Text',
+              ),
+              StreamStateBuilder(
+                streamState: AppManager().useRedText,
+                builder: (context, state) => Checkbox(
+                  value: AppManager().useRedText.state,
+                  onChanged: (value) => AppManager().useRedText.state = value,
+                ),
+              ),
+            ],
+          )
+        ],
       ),
       body: Center(
         child: Column(
@@ -42,11 +59,17 @@ class StreamStateExample extends StatelessWidget {
             Text(
               'You have pushed the button this many times:',
             ),
-            StreamStateBuilder(
-              streamState: AppManager().counter,
-              builder: (context, state) => Text(
-                state.toString(),
-                style: Theme.of(context).textTheme.headline4,
+            StreamStateBuilder<bool>(
+              streamState: AppManager().useRedText,
+              builder: (context, colorTextState) => StreamStateBuilder<int>(
+                streamState: AppManager().counter,
+                builder: (context, counterState) => Text(
+                  counterState.toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4
+                      .copyWith(color: colorTextState ? Colors.red : null),
+                ),
               ),
             )
           ],
