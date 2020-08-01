@@ -1,6 +1,6 @@
 name: stream_state
-description: A very thin wrapper around streams for simple but easy to use state management.
-version: 0.0.1
+description: A very simple state management option for those struggling with declarative / react style programming.
+version: 0.0.2
 author: Zachary DiMaria<zacharydimaria@gmail.com>
 homepage: https://github.com/phimath/stream_state.git
 
