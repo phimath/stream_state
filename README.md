@@ -1,30 +1,32 @@
-# stream_state
 
-StreamState is an extremely simple wrapper around streams for use as state management.
 
-The included example also uses a singleton to store the state for simplicity,
-but this could be stored in a stateful widget or accessed by any other means.
+## StreamState
 
-## Getting Started
+StreamState is an extremely thin wrapper around streams to use them as very simple but easy to use state management.
 
-To add some new bit of state simply create a `StreamState` with a type and an initial value:
+
+## How to use
+
+To add some new bit of state simply create a `StreamState` with an initial value:
 ```dart
     var counter = StreamState<int>(initial: 0);
     var useRedText = StreamState<bool>(initial: true);
 
 ```
 
-You can then update the state:
+
+It is very easy to update the state:
 ```dart
     counter++;
     useRedText = !useRedText;
 ```
 
-Use StreamStateBuilder's to automatically update your UI with these changes:
+
+StreamStateBuilders will automatically update your UI when the state changes:
 ```dart
-    StreamStateBuilder(
+    StreamStateBuilder<bool>(
         streamState: useRedText,
-        builder: (context, useRedTextState) => StreamStateBuilder(
+        builder: (context, useRedTextState) => StreamStateBuilder<int>(
             streamState: counter,
             builder: (context, counterState) => Text(
                 counterState.toString(),
@@ -33,4 +35,10 @@ Use StreamStateBuilder's to automatically update your UI with these changes:
     ), //StreamStateBuilder
 ```
 
+## Included Example
 
+The included example uses a singleton to store the state for simplicity.  This makes it very easy to
+access your state from anywhere in your app. You can create as many of these singletons as you'd like to
+separate the logic of your code.
+
+You could also store your StreamStates in any other way, including just in a stateful widget.
