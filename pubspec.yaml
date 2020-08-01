@@ -1,8 +1,8 @@
 name: stream_state
-description: A new Flutter package project.
+description: A very thin wrapper around streams for simple but easy to use state management.
 version: 0.0.1
-author:
-homepage:
+author: Zachary DiMaria<zacharydimaria@gmail.com>
+homepage: https://github.com/phimath/stream_state.git
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
