@@ -56,6 +56,12 @@ class StreamStateExample extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            MultiStreamStateBuilder(
+              streamStates: [AppManager().useRedText, AppManager().counter],
+              builder: (context, multiState) {
+                print(multiState);
+              },
+            ),
             Text(
               'You have pushed the button this many times:',
             ),
@@ -71,7 +77,7 @@ class StreamStateExample extends StatelessWidget {
                       .copyWith(color: colorTextState ? Colors.red : null),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

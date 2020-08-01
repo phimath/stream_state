@@ -17,3 +17,37 @@ class StreamStateBuilder<T> extends StatelessWidget {
         builder: (context, snapshot) => builder(context, snapshot.data),
       );
 }
+
+class MultiStreamStateBuilder extends StatefulWidget {
+  final List<StreamState> streamStates;
+
+  final MultiStreamState multiStreamState;
+
+  MultiStreamStateBuilder({@required this.streamStates})
+      : multiStreamState = MultiStreamState(streamStates: streamStates);
+
+  @override
+  _MultiStreamStateBuilderState createState() =>
+      _MultiStreamStateBuilderState();
+}
+
+class _MultiStreamStateBuilderState extends State<MultiStreamStateBuilder> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+// class MultiStreamStateBuilder extends StatelessWidget {
+//   final List<StreamState> streamStates;
+//   final Function builder;
+
+//   const MultiStreamStateBuilder({@required this.streamStates, @required this.builder});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     for (StreamState streamState in streamStates.reversed){
+//       var builder =
+//     }
+//   }
+// }
