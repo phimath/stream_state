@@ -26,7 +26,7 @@ For each piece of state that you want to manage, create a `StreamState` object w
 
 ```
 
-The current state of a `StreamState` object use stored in it's `.state` attribute:
+The current state of a `StreamState` object is stored in it's `.state` attribute:
 
 ```dart
     print(counter.state);
@@ -34,13 +34,13 @@ The current state of a `StreamState` object use stored in it's `.state` attribut
 ```
 
 
-It is very easy to update the state, just modify the `state` attribute of the `StreamState` object.
+It is very easy to update the state, just modify the `state` attribute of the `StreamState` object:
 ```dart
     counter.state++;
     useRedText.state = !useRedText.state;
 ```
 
-To have a widget in your UI automatically update when the state changes, you can use a `StreamStateBuilder` widget.
+To have a widget in your UI automatically update when the state changes, you can use a `StreamStateBuilder` widget:
 
 ```dart
     StreamStateBuilder<int>( // its good practice to tell the builder the type of the state (int)
@@ -51,7 +51,7 @@ To have a widget in your UI automatically update when the state changes, you can
 ```
 
 
-You can nest multiple `StreamStateBuilder` to have access to many state objects at the same time.  If one state will be modified more often than another, its better to put  it deeper in the tree:
+You can nest multiple `StreamStateBuilder` widgets to have access to many state objects at the same time.  If one state will be modified more often than another, its better (but not necessary) to put  it deeper in the tree:
 
 ```dart
     StreamStateBuilder<bool>( // users will modify 'useRedText' less often, so we put it on the outside
