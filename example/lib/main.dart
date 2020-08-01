@@ -59,9 +59,9 @@ class StreamStateExample extends StatelessWidget {
             Text(
               'You have pushed the button this many times:',
             ),
-            StreamStateBuilder(
+            StreamStateBuilder<bool>(
               streamState: AppManager().useRedText,
-              builder: (context, colorTextState) => StreamStateBuilder(
+              builder: (context, colorTextState) => StreamStateBuilder<int>(
                 streamState: AppManager().counter,
                 builder: (context, counterState) => Text(
                   counterState.toString(),
