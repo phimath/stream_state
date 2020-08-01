@@ -2,7 +2,7 @@
 
 ## StreamState
 
-StreamState is an extremely thin wrapper around streams to use them as very simple but easy to use state management.
+StreamState is an extremely thin wrapper around streams to make them a very simple but easy to use state management option.
 
 
 ## How to use
@@ -37,7 +37,7 @@ StreamStateBuilders will automatically update your UI when the state changes:
 
 ## Included Example
 
-The included example uses a singleton to store the state for simplicity.  This makes it very easy to
+The included counter example uses a singleton to store the state for simplicity.  This makes it very easy to
 access your state from anywhere in your app. You can create as many of these singletons as you'd like to
 separate the logic of your code.
 
