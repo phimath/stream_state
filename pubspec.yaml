@@ -1,8 +1,8 @@
 name: stream_state
 description: A very simple state management option for those struggling with declarative / react style programming.
-version: 0.0.2
+version: 0.0.3
 author: Zachary DiMaria<zacharydimaria@gmail.com>
-homepage: https://github.com/phimath/stream_state.git
+homepage: https://github.com/phimath/stream_state
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
