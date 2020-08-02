@@ -4,7 +4,7 @@
 #### *Extremely simple and easy to use state management*
 StreamState is a simple state management option for those struggling with declarative / react style programming.
 
-**You do not need to understand what streams are, or how to use them to use this package.**  In fact if you *do* understand them well, than this style of state management might be too simple a solution for what you are doing.
+**You do not need to understand what streams are, or how to use them to use this package.**  In fact if you *do* understand them well, then this style of state management might be too simple a solution for what you are doing.
 
 
 ## General concept
@@ -89,7 +89,7 @@ You can nest multiple `StreamStateBuilder` widgets to have access to many state 
 
 For simplicity, the included counter example uses a *singleton* to store the `StreamState` objects.  This makes it very easy to access your state from anywhere in your app. You can create as many of these singletons as you'd like to separate the logic of your code.
 
-Any time you use `AppManager()` it will always return the same object (containing our state).
+Any time you call `AppManager()` it will always return the same object (containing our state).
 
 You could also store your `StreamState` objects in any other way, including just in a `Stateful Widget`.
 
