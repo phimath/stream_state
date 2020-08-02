@@ -2,7 +2,7 @@
 
 # StreamState
 #### *Extremely simple and easy to use state management*
-StreamState is a simple state management option for those struggling with declarative / react style programming.
+StreamState is a simple state management option for those new to or struggling with declarative / react style programming.
 
 **You do not need to understand what streams are, or how to use them to use this package.**  In fact if you *do* understand them well, then this style of state management might be too simple a solution for what you are doing.
 
@@ -41,58 +41,36 @@ It is very easy to update the state -- just modify the `state` attribute of the 
     useRedText.state = !useRedText.state;
 ```
 
-To have a widget in your UI automatically update when the state changes, you can use a `MultiStreamStateBuilder` widget. It takes a list of `StreamState` and knows to rebuild when any of them change.
+To have a widget in your UI automatically update when the state changes, you can use a `MultiStreamStateBuilder` widget. It takes a list of `StreamState` objects and knows to rebuild when any of them change.
 ```dart
     MultiStreamStateBuilder(
-        streamStates: [AppManager().useRedText], // list of StreamStates to listen to for changes
+        streamStates: [useRedText], // list of StreamStates to listen to for changes
         builder: (_) => Checkbox(
-        value: AppManager().useRedText.state,
-        onChanged: (value) => AppManager().useRedText.state = value
+        value: useRedText.state,
+        onChanged: (value) => useRedText.state = value
         ),
     ),
 ```
 
-
-
-
-
-<!-- 
-To have a widget in your UI automatically update when the state changes, you can use a `StreamStateBuilder` widget:
-
+Here is an example of how easy it is to listen to multiple `StreamState` objects for changes:
 ```dart
-    StreamStateBuilder<int>( // its good practice to tell the builder the type of the state (int)
-        streamState: counter // give the builder the StreamState object
-        builder: (context, currentState)=> Text('$currentState'), // build a widget using the current state
-    )
-
-```
-
-
-You can nest multiple `StreamStateBuilder` widgets to have access to many state objects at the same time.  If one state will be modified more often than another, its better (but not necessary) to put  it deeper in the tree:
-
-```dart
-    StreamStateBuilder<bool>( // users will modify 'useRedText' less often, so we put it on the outside
-        streamState: useRedText, // provide the 'useRedText' StreamState object
-        builder: (context, useRedTextState) => StreamStateBuilder<int>( // counter will change more often so its deeper in the tree
-            streamState: counter, // provide the 'counter' StreamState object
-            builder: (context, counterState) => Text(
-                '$counterState', // we can access the counterState
-                style: TextStyle(color: useRedTextState ? Colors.red : null), // and also the useRedText state
+    MultiStreamStateBuilder(
+        streamStates: [useRedText, counter], // widget will update when either of these change
+        builder: (_) => Text(
+            counter.state.toString(),
+            style: TextStyle(color: useRedText.state ? Colors.red : null),
         ),
-    ), 
 ```
-> Don't stress too much about the ordering of nested builders.  Flutter rebuilds widgets extremely fast so in practice this isn't too important.
-
-*** -->
 
 ## AppManager / Where to store StreamState objects?
 
-For simplicity, the included counter example uses a *singleton* to store the `StreamState` objects.  This makes it very easy to access your state from anywhere in your app. You can create as many of these singletons as you'd like to separate the logic of your code.
+For simplicity, the included counter example uses a *singleton* called `AppManager` to store the `StreamState` objects.  This makes it very easy to access your state from anywhere in your app.
 
 Any time you call `AppManager()` it will always return the same object (containing our state).
 
-You could also store your `StreamState` objects in any other way, including just in a `Stateful Widget`.
+You can create as many managers as you'd like to separate the logic of your code.
 
+You could also store your `StreamState` objects in any other way, including just in a `Stateful Widget`.
 
 
 ***
@@ -109,7 +87,6 @@ Most of the available state management solutions involved very heady concepts an
 
 I made this package because it would have made making my first few apps a much more pleasant experience.
 
-Also, as a somewhat novice Flutter developer (this is my first package) I want to get feedback from the community on why this might be a bad way to work.
 
 ### Do you need help?
 I'm now a massive fan of Flutter and react style programming. I'm still learning but also want to give back and help others where I can. If you need help implementing this or are struggling with the concepts, feel free to reach out!

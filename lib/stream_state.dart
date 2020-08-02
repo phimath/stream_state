@@ -45,6 +45,8 @@ class MultiStreamState {
 
   final StreamController _streamController = StreamController();
 
+  endStream() => _streamController.close();
+
   /// This is the multi state broadcast stream
   Stream stream;
 
