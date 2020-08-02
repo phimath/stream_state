@@ -2,9 +2,9 @@
 
 # StreamState
 #### *Extremely simple and easy to use state management*
-StreamState is a simple state management option for those new to or struggling with declarative / react style programming.
+StreamState is a very simple and easy to use state management option for those new to declarative / react style programming.
 
-**You do not need to understand what streams are, or how to use them to use this package.**  In fact if you *do* understand them well, then this style of state management might be too simple a solution for what you are doing.
+**You do not need to understand what streams are, or how to use them to use this package.**  In fact if you *do* understand them well, then this style of state management might be too simple for what you are doing.
 
 
 ## General concept
@@ -68,7 +68,7 @@ For simplicity, the included counter example uses a *singleton* called `AppManag
 
 Any time you call `AppManager()` it will always return the same object (containing our state).
 
-You can create as many managers as you'd like to separate the logic of your code.
+You can create as many managers as you'd like to separate the logic of your code.  For example you can have an `AuthManager` that stores state related to login flow and user tokens.
 
 You could also store your `StreamState` objects in any other way, including just in a `Stateful Widget`.
 
