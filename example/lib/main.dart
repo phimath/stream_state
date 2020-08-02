@@ -5,6 +5,10 @@ import 'package:stream_state/stream_state_builder.dart';
 class AppManager {
   /// This is a singleton so that we can easily access our StreamState
   /// obects from anywhere in our code.
+  ///
+  /// You can make as many Managers as you want, to keep different types of state together.
+  /// for example, having a AuthManager to store state about log-in flow, the user, or tokens.
+  ///
   /// The following 3 lines are boilerplate of setting up the singleton.
   static final AppManager _singleton = AppManager._internal();
   factory AppManager() => _singleton;

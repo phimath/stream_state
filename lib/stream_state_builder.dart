@@ -48,6 +48,12 @@ class MultiStreamStateBuilder extends StatefulWidget {
 
 class _MultiStreamStateBuilderState extends State<MultiStreamStateBuilder> {
   @override
+  void dispose() {
+    super.dispose();
+    widget.multiStreamState.endStream();
+  }
+
+  @override
   Widget build(BuildContext context) => StreamBuilder<void>(
       initialData: null,
       stream: widget.multiStreamState.stream,

@@ -1,4 +1,9 @@
-## [0.0.3] - 2020-08-1
+## [0.0.5] - 2020-08-2
+
+* Clean up readme with clearer and simpler examples.
+
+
+## [0.0.4] - 2020-08-1
 
 * Add `MultiStreamStateBuilder` and update docs to only show this use.  It makes it easy to use many `StreamState` objects without the need for nesting.
 
