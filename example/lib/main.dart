@@ -63,7 +63,8 @@ class StreamStateExample extends StatelessWidget {
           ),
           Text('You have pushed the button this many times:'),
           // Use a builder to display the text of counter in the correct color
-          MultiStreamStateBuilder(
+          // Note that MSSB is identical to and just shorthand for MultiStreamStateBuilder
+          MSSB(
             streamStates: [AppManager().useRedText, AppManager().counter],
             builder: (_) => Text(
               AppManager().counter.state.toString(),
