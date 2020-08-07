@@ -59,3 +59,9 @@ class _MultiStreamStateBuilderState extends State<MultiStreamStateBuilder> {
       stream: widget.multiStreamState.stream,
       builder: (context, snapshot) => widget.builder(context));
 }
+
+mixin _AsAlias {}
+
+/// MSSB is identical to, and just shorthand for [MultiStreamStateBuilder]
+/// Please reference the [MultiStreamStateBuilder] docs for information on its use.
+class MSSB = MultiStreamStateBuilder with _AsAlias;

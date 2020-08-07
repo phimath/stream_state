@@ -18,6 +18,7 @@ If you're used to programming UIs in an imperative style (Qt for example), this 
 ## How to use
 >The included counter example manages 2 pieces of state, an `int` called **counter** that stores how many times we have pressed a button, and a `bool` called **useRedText** that says if we should display the counter using red text or not.
 
+**Create state:**
 
 For each piece of state that you want to manage, create a `StreamState` object with an initial value. Each `StreamState` object can manage state of any type, including custom classes:
 
@@ -26,6 +27,7 @@ For each piece of state that you want to manage, create a `StreamState` object w
     var useRedText = StreamState<bool>(initial: true);
 
 ```
+**Access state:**
 
 The current state of a `StreamState` object is stored in it's `state` attribute:
 
@@ -34,12 +36,15 @@ The current state of a `StreamState` object is stored in it's `state` attribute:
     print(useRedText.state);
 ```
 
+**Update state:**
 
 It is very easy to update the state -- just modify the `state` attribute of the `StreamState` object:
 ```dart
     counter.state++;
     useRedText.state = !useRedText.state;
 ```
+
+**Have widgets auto update when state changes:**
 
 To have a widget in your UI automatically update when the state changes, you can use a `MultiStreamStateBuilder` widget. It takes a list of `StreamState` objects and knows to rebuild when any of them change.
 ```dart
@@ -51,6 +56,7 @@ To have a widget in your UI automatically update when the state changes, you can
         ),
     ),
 ```
+**Have widgets watch many states to know when to auto update:**
 
 Here is an example of how easy it is to listen to multiple `StreamState` objects for changes:
 ```dart
@@ -61,6 +67,23 @@ Here is an example of how easy it is to listen to multiple `StreamState` objects
             style: TextStyle(color: useRedText.state ? Colors.red : null),
         ),
 ```
+
+**Isn't `MultiStreamStateBuilder` is a lot to type all the time? _You can use `MSSB` instead:_**
+
+Because the `MultiStreamStateBuilder` is used so often, and it's quite a lot to type, there is an alias for it: `MSSB`. The two classes are completely identical, so the following example is the same as the previous:
+```dart
+    MSSB( // MSSB is just shorthand for MultiStreamStateBuilder. They are identical.
+        streamStates: [useRedText, counter], // widget will update when either of these change
+        builder: (_) => Text(
+            counter.state.toString(),
+            style: TextStyle(color: useRedText.state ? Colors.red : null),
+        ),
+```
+**How to handle modification of state when not using `state = x`:**
+
+If you modify your state without using `=`, you need to call `StreamState.forceUpdate()` to trigger widget rebuilds.  For example, if your `StreamState` object is a `List` and you call `myStreamStateList.state.add(new_element)`, the `MultiStreamStateBuilder` widgets won't rebuild until you call `myStreamStateList.forceUpdate()`.
+
+
 
 ## AppManager / Where to store StreamState objects?
 
