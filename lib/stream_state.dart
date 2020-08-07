@@ -26,6 +26,10 @@ class StreamState<T> {
     stream = _streamController.stream.asBroadcastStream();
   }
 
+  /// If the state is mutated without being set directly (like state.add(), or modifying
+  /// a custom classes' attributes, we can call forceUpdate() to trigger changes.
+  forceUpdate() => state = state;
+
   /// Get the current value of the state
   T get state => _current;
 
