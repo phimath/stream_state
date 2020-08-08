@@ -1,5 +1,9 @@
 ## [0.0.6] - 2020-08-6
 
+* Collect and cancel MSSB subscriptions
+
+## [0.0.6] - 2020-08-6
+
 * Add and explain forceUpdate() to handle indirect modification of state.
 * Add `MSSB` alias because `MultiStreamStateBuilder` is long to type
 
