@@ -49,7 +49,9 @@ class MultiStreamState {
 
   final StreamController _streamController = StreamController();
 
-  endStream() => _streamController.close();
+  cleanUp() => _subscriptions.forEach((subscription) => subscription.cancel());
+
+  List<StreamSubscription> _subscriptions = [];
 
   /// This is the multi state broadcast stream
   Stream stream;
@@ -59,9 +61,10 @@ class MultiStreamState {
   MultiStreamState({@required this.streamStates}) {
     stream = _streamController.stream.asBroadcastStream();
     for (StreamState streamState in streamStates) {
-      streamState.stream.listen((value) {
+      StreamSubscription subscription = streamState.stream.listen((value) {
         _streamController.add(null);
       });
+      _subscriptions.add(subscription);
     }
   }
 }

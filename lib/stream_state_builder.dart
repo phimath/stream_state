@@ -50,7 +50,7 @@ class _MultiStreamStateBuilderState extends State<MultiStreamStateBuilder> {
   @override
   void dispose() {
     super.dispose();
-    widget.multiStreamState.endStream();
+    widget.multiStreamState.cleanUp();
   }
 
   @override
