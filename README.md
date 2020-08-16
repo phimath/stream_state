@@ -2,9 +2,20 @@
 
 # StreamState
 #### *Extremely simple and easy to use state management*
-StreamState is a very simple and easy to use state management option for those new to declarative / react style programming.
 
-**You do not need to understand what streams are, or how to use them to use this package.**  In fact if you *do* understand them well, then this style of state management might be too simple for what you are doing.
+
+
+* Easy to learn and use
+* No boilerplate
+* No reactive programming knowledge required
+* Automatic state persistence -- save the state of your variables between app launches! (Uses [Hive](https://pub.dev/packages/hive) under the hood)
+* VS Code snippets available for common tasks
+
+**You do not need to understand what streams are, or how to use them to use this package.** 
+
+StreamState is a very simple and easy to use state management option for those new to declarative / react style programming.  It has no boilerplate, and also offers easy automatic state persistence (it will automatically save the state of your variables between app launches).
+
+ 
 
 
 ## General concept
@@ -13,6 +24,7 @@ The main idea in reactive style programming is that your UI just shows the curre
 
 
 If you're used to programming UIs in an imperative style (Qt for example), this can be a hard concept to adjust to at first, but I promise its really awesome, powerful and enjoyable to use once it 'clicks'.
+
 
 
 ## How to use
@@ -84,16 +96,62 @@ Because the `MultiStreamStateBuilder` is used so often, and it's quite a lot to 
 If you modify your state without using `=`, you need to call `StreamState.forceUpdate()` to trigger widget rebuilds.  For example, if your `StreamState` object is a `List` and you call `myStreamStateList.state.add(new_element)`, the `MultiStreamStateBuilder` widgets won't rebuild until you call `myStreamStateList.forceUpdate()`.
 
 
+## Easy State Persistence (Save variables across App launches)
+SteamState makes it very easy to persist state across app launches.  To allow `StreamState` objects to persist, you must call `await initStreamStatePersist()` when you start your app.  The easiest way to do this is in your `main()` function like so:
+```dart
+    void main() async {
+        await initStreamStatePersist();
+        runApp(MyApp());
+    }
+```
+
+
+
+Then you can tell any of your `StreamState` objects to save their state across launches, by simply setting `persist:true` and providing a `persistPath`:
+```dart
+    var counter = StreamState<int>(
+        initial: 0,
+        persist: true,
+        persistPath: 'counter',
+    );
+    var useRedText = StreamState<bool>(
+        initial: true,
+        persist: true,
+        persistPath: 'useRedText',
+    );
+```
+The `persistPath` is just a String that uniquely identifies which StreamState object you want to persist.  For simple apps, just using the variable name is fine, but if you have lots of `StreamState` objects that you want to persist, you might want to stay organized by providing a full path like `'/settings/theme/useDarkTheme'`.
+
+#### What types can be persisted?
+
+
+Currently the types of state that can be persisted are: 
+* `int`
+* `double`
+* `String`
+* `bool`
+* `List`
+* `Set`
+* `Map`
+* `DateTime`
+* `BigInt`
+* `Uint8List`
+
+>Please note that types that contain other types, like `List` and `Map` and `Set`, must also only contain the above types in order to be persisted.
+
+I plan on adding serialization and deserialization support for custom types in the future.
+
+StreamState uses [Hive](https://pub.dev/packages/hive) under the hood to persist objects,  so my thanks goes out to [Simon Leier](https://github.com/leisim) for making such an awesome and easy to use package.
 
 ## AppManager / Where to store StreamState objects?
 
-For simplicity, the included counter example uses a *singleton* called `AppManager` to store the `StreamState` objects.  This makes it very easy to access your state from anywhere in your app.
+For simplicity and ease, the included counter example uses a *singleton* called `AppManager` to store the `StreamState` objects.  This makes it very easy to access your state from anywhere in your app.
 
 Any time you call `AppManager()` it will always return the same object (containing our state).
 
-You can create as many managers as you'd like to separate the logic of your code.  For example you can have an `AuthManager` that stores state related to login flow and user tokens.
+You can create as many managers as you'd like to separate the logic of your code.  For example you can have an `AuthManager()` that stores state related to login flow and user tokens.
 
-You could also store your `StreamState` objects in any other way, including just in a `Stateful Widget`.
+You could also store your `StreamState` objects in any other way, including just in a `Stateful Widget`, or in a class along with some other type of dependency injection like [Provider](https://pub.dev/packages/provider) or [GetIt](https://pub.dev/packages/get_it).
 
 
 ***
