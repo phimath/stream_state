@@ -1,4 +1,4 @@
-## [0.0.6] - 2020-08-6
+## [0.0.7] - 2020-08-6
 
 * Collect and cancel MSSB subscriptions
 
