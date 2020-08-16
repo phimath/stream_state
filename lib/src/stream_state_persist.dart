@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stream_state/stream_state.dart';
@@ -6,6 +8,19 @@ class StreamStatePersist {
   static final StreamStatePersist _singleton = StreamStatePersist._internal();
   factory StreamStatePersist() => _singleton;
   StreamStatePersist._internal();
+
+  static const supportedTypes = [
+    int,
+    double,
+    String,
+    bool,
+    List,
+    Set,
+    Map,
+    DateTime,
+    BigInt,
+    Uint8List
+  ];
 
   Box streamStateBox;
   static const String boxName = '_streamStatePersist';

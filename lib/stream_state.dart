@@ -24,19 +24,6 @@ initStreamStatePersist() async {
 /// Each [StreamState] object manages a single variable / value of type [<T>]
 /// [StreamState] objects can manage any class or type.
 class StreamState<T> {
-  static const supportedTypes = [
-    int,
-    double,
-    String,
-    bool,
-    List,
-    Set,
-    Map,
-    DateTime,
-    BigInt,
-    Uint8List
-  ];
-
   /// The initial value of this object. It can be any type of object,
   /// including custom classes.
   final T initial;
@@ -70,8 +57,8 @@ class StreamState<T> {
     assert(!persist || StreamStatePersist().initialized,
         '\n\nIf persist is true on any StreamState object, then you must initStreamStatePersist()\n\n\n This is normally done like this:\n\nvoid main() async {\n  await initStreamStatePersist();\n  runApp(MyApp());\n}\n\n');
 
-    assert(!persist || supportedTypes.contains(T),
-        '\n\n$T is not a StreamState persistable type.\n\nYou can only persist $supportedTypes objects with StreamState.\n');
+    assert(!persist || StreamStatePersist.supportedTypes.contains(T),
+        '\n\n$T is not a StreamState persistable type.\n\nYou can only persist ${StreamStatePersist.supportedTypes.join(' ')} objects with StreamState.\n');
 
     _current = initial;
     stream = _streamController.stream.asBroadcastStream();
