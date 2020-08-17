@@ -9,7 +9,9 @@
 * No boilerplate
 * No reactive programming knowledge required
 * Automatic state persistence -- save the state of your variables between app launches! (Uses [Hive](https://pub.dev/packages/hive) under the hood)
+* Full Flutter Web support
 * VS Code snippets available for common tasks
+
 
 **You do not need to understand what streams are, or how to use them to use this package.** 
 
@@ -121,6 +123,13 @@ Then you can tell any of your `StreamState` objects to save their state across l
     );
 ```
 The `persistPath` is just a String that uniquely identifies which StreamState object you want to persist.  For simple apps, just using the variable name is fine, but if you have lots of `StreamState` objects that you want to persist, you might want to stay organized by providing a full path like `'/settings/theme/useDarkTheme'`.
+
+You can reset a persisted state back to its initial value with `resetPersist()`:
+```dart
+    counter.resetPersist();
+    useRedText.resetPersist();
+```
+
 
 #### What types can be persisted?
 

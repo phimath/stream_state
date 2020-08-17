@@ -52,6 +52,16 @@ class StreamStateExample extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('StreamState Persist Example'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              // This is how you can reset persisted state to its initial value.
+              PersistManager().counter.resetPersist();
+              PersistManager().useRedText.resetPersist();
+            },
+          )
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,7 +1,5 @@
 library stream_state;
 
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -70,7 +68,12 @@ class StreamState<T> {
   /// a custom classes' attributes, we can call forceUpdate() to trigger changes.
   forceUpdate() => state = state;
 
-  resetPersist() => StreamStatePersist().delete(this);
+  /// You can call this method to clear the persisted state from a StreamState object
+  /// and reset it back to the initial value.
+  resetPersist() {
+    StreamStatePersist().delete(this);
+    state = initial;
+  }
 
   /// Get the current value of the state
   T get state => _current;
