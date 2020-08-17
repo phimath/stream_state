@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart' if (kIsWeb) '';
+import 'package:hive_flutter/hive_flutter.dart' if (dart.library.html) '';
 import 'package:stream_state/stream_state.dart';
 
 class StreamStatePersist {

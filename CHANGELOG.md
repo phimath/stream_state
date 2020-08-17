@@ -1,3 +1,7 @@
+## [0.0.10] - 2020-08-16
+
+* Fix web import
+
 ## [0.0.9] - 2020-08-16
 
 * Conditionally import hive to fix pub.dev web support detection
