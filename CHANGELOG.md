@@ -1,6 +1,6 @@
-## [0.0.10] - 2020-08-16
+## [0.0.11] - 2020-08-16
 
-* Fix web import
+* Move conditional import to adapters to correctly fix web detection
 
 ## [0.0.9] - 2020-08-16
 
