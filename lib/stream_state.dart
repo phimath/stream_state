@@ -61,7 +61,7 @@ class StreamState<T> {
     _current = initial;
     stream = _streamController.stream.asBroadcastStream();
 
-    StreamStatePersist().persist(this);
+    if (persist) StreamStatePersist().persist(this);
   }
 
   /// If the state is mutated without being set directly (like state.add(), or modifying
