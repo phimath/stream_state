@@ -1,6 +1,7 @@
 library stream_state_builder;
 
 import 'package:flutter/material.dart';
+import 'package:stream_state/src/multi_stream_state.dart';
 import 'package:stream_state/stream_state.dart';
 
 /// A builder that listens to a [StreamState] for changes.

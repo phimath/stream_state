@@ -3,6 +3,19 @@ library stream_state;
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:stream_state/src/stream_state_persist.dart';
+
+/// Sets up persistance of StreamState objects.  This should be called
+/// with an await in main, like:
+/// void main() async {
+///   await initStreamStatePersist();
+///   runApp(MyApp());
+/// }
+/// StreamState use Hive in the background to persist state.
+initStreamStatePersist() async {
+  await StreamStatePersist().initDb();
+}
+
 /// A thin wrapper around streams to act as a simple state management solution.
 ///
 /// While you dont need to provide [<T>] its good practice to do so.
@@ -16,19 +29,51 @@ class StreamState<T> {
 
   final StreamController<T> _streamController = StreamController<T>();
 
+  /// If [persist] is true, this StreamState will automatically save the current
+  /// state so that it remains the same in between app launches.
+  /// StreamState use Hive in the background to persist state.
+  final bool persist;
+
+  /// If [persist] is true, you MUST provide a [persistPath] string.  This can be
+  /// as simple as the name of the variable like 'useDarkMode'.  For larger apps with
+  /// lots of persisted state, it might be a good idea to help organize with a path like
+  /// '/settings/theme/useDarkMode', but this changes nothing under the hood and is still
+  /// just treated as a string.
+  /// StreamState use Hive in the background to persist state.
+  final String persistPath;
+
   /// This is the stream of state.  You can use Stream.listen() to add a callback
   /// to this stream
   Stream stream;
 
   /// Build a StreamState with an [initial] value.
-  StreamState({@required this.initial}) {
+  StreamState(
+      {@required this.initial, this.persist = false, this.persistPath}) {
+    assert(!persist || persistPath != null,
+        '\n\nIf persist is true on any StreamState object, then persistPath must not be null.\n');
+
+    assert(!persist || StreamStatePersist().initialized,
+        '\n\nIf persist is true on any StreamState object, then you must initStreamStatePersist()\n\n\n This is normally done like this:\n\nvoid main() async {\n  await initStreamStatePersist();\n  runApp(MyApp());\n}\n\n');
+
+    assert(!persist || StreamStatePersist.supportedTypes.contains(T),
+        '\n\n$T is not a StreamState persistable type.\n\nYou can only persist ${StreamStatePersist.supportedTypes.join(' ')} objects with StreamState.\n');
+
     _current = initial;
     stream = _streamController.stream.asBroadcastStream();
+
+    if (persist) StreamStatePersist().persist(this);
   }
 
   /// If the state is mutated without being set directly (like state.add(), or modifying
   /// a custom classes' attributes, we can call forceUpdate() to trigger changes.
   forceUpdate() => state = state;
+
+  /// You can call this method to clear the persisted state from a StreamState object
+  /// and reset it back to the initial value.
+  resetPersist() {
+    StreamStatePersist().delete(this);
+    state = initial;
+  }
 
   /// Get the current value of the state
   T get state => _current;
@@ -38,33 +83,5 @@ class StreamState<T> {
   set state(T value) {
     _current = value;
     _streamController.add(value);
-  }
-}
-
-/// A helper class to facilitate the [MultiStreamStateBuilder] ability
-/// to listen to multiple [StreamState] objects
-class MultiStreamState {
-  /// The list of [StreamState] objects that we will listen to for changes.
-  final List<StreamState> streamStates;
-
-  final StreamController _streamController = StreamController();
-
-  cleanUp() => _subscriptions.forEach((subscription) => subscription.cancel());
-
-  List<StreamSubscription> _subscriptions = [];
-
-  /// This is the multi state broadcast stream
-  Stream stream;
-
-  /// A helper class to facilitate the [MultiStreamStateBuilder] ability
-  /// to listen to multiple [StreamState] objects
-  MultiStreamState({@required this.streamStates}) {
-    stream = _streamController.stream.asBroadcastStream();
-    for (StreamState streamState in streamStates) {
-      StreamSubscription subscription = streamState.stream.listen((value) {
-        _streamController.add(null);
-      });
-      _subscriptions.add(subscription);
-    }
   }
 }
