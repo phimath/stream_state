@@ -1,7 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart' if (kIsWeb) '';
 import 'package:stream_state/stream_state.dart';
 
 class StreamStatePersist {
@@ -28,7 +29,7 @@ class StreamStatePersist {
   bool initialized = false;
 
   initDb() async {
-    await Hive.initFlutter();
+    if (!kIsWeb) await Hive.initFlutter();
     streamStateBox = await Hive.openBox(boxName);
     initialized = true;
   }

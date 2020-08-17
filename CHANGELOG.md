@@ -1,3 +1,7 @@
+## [0.0.9] - 2020-08-16
+
+* Conditionally import hive to fix pub.dev web support detection
+
 ## [0.0.8] - 2020-08-16
 
 * Added easy automatic state persistence
