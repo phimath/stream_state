@@ -1,0 +1,1 @@
+initHive() async {}

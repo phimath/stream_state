@@ -1,3 +1,7 @@
+## [0.1.0] - 2020-08-16
+
+* Move conditional import to adapters to correctly fix web detection
+
 ## [0.0.9] - 2020-08-16
 
 * Conditionally import hive to fix pub.dev web support detection
