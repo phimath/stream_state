@@ -1,6 +1,6 @@
 name: stream_state
 description: A very simple and easy to use state management option for those new to declarative / react style programming.  It has no boilerplate and supports automatic state persistence.
-version: 0.0.10
+version: 0.1.0
 author: Zachary DiMaria<zacharydimaria@gmail.com>
 homepage: https://github.com/phimath/stream_state
 
