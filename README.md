@@ -8,7 +8,7 @@
 * Easy to learn and use
 * No boilerplate
 * No reactive programming knowledge required
-* Automatic state persistence -- save the state of your variables between app launches! (Uses [Hive](https://pub.dev/packages/hive) under the hood)
+* Automatic state persistence -- save the state of your variables between app launches
 * Full Flutter Web support
 * VS Code snippets available for common tasks
 
@@ -99,6 +99,9 @@ If you modify your state without using `=`, you need to call `StreamState.forceU
 
 
 ## Easy State Persistence (Save variables across App launches)
+
+>There is a 2nd example file called `persist_state_main.dart` that shows different persisted `StreamState` objects, including a persisted Custom Class.
+
 SteamState makes it very easy to persist state across app launches.  To allow `StreamState` objects to persist, you must call `await initStreamStatePersist()` when you start your app.  The easiest way to do this is in your `main()` function like so:
 ```dart
     void main() async {
@@ -134,7 +137,7 @@ You can reset a persisted state back to its initial value with `resetPersist()`:
 #### What types can be persisted?
 
 
-Currently the types of state that can be persisted are: 
+Currently the types of state that can be directly persisted are: 
 * `int`
 * `double`
 * `String`
@@ -148,7 +151,19 @@ Currently the types of state that can be persisted are:
 
 >Please note that types that contain other types, like `List` and `Map` and `Set`, must also only contain the above types in order to be persisted.
 
-I plan on adding serialization and deserialization support for custom types in the future.
+#### What about persisting custom classes?
+
+You can persist custom objects by providing serialization and deserialization functions. The serialization function must serialize the `state` to one of the above directly persistable types (such as a `Map` in the following example), and the deserialization function should return your object.
+
+```dart
+    var custom = StreamState<Custom>(
+        initial: Custom(name: 'My Persisted Custom Class', awesomeness: 10),
+        persist: true,
+        persistPath: 'custom',
+        serialize: (state) => state.toMap(),
+        deserialize: (serialized) => Custom.fromMap(serialized),
+    );
+```
 
 StreamState uses [Hive](https://pub.dev/packages/hive) under the hood to persist objects,  so my thanks goes out to [Simon Leier](https://github.com/leisim) for making such an awesome and easy to use package.
 
