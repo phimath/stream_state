@@ -36,16 +36,26 @@ class StreamStatePersist {
 
   void persist(StreamState streamState) {
     // initialize value
-    var initial = read(streamState.persistPath, streamState.initial);
-    streamState.state = initial;
+    if (streamState.deserialize != null) {
+      var initialSerialized = streamState.serialize(streamState.initial);
+      var serialized = read(streamState.persistPath, initialSerialized);
+      print(serialized);
+      streamState.state = streamState.deserialize(serialized);
+    } else {
+      var initial = read(streamState.persistPath, streamState.initial);
+      streamState.state = initial;
+    }
 
     // record changes
-    streamState.stream.listen((value) => write(streamState.persistPath, value));
+    streamState.stream.listen((value) {
+      if (streamState.serialize != null) value = streamState.serialize(value);
+      write(streamState.persistPath, value);
+    });
   }
 
   void write(String path, dynamic value) => streamStateBox.put(path, value);
 
-  read(String path, dynamic defaultValue) =>
+  Object read(String path, dynamic defaultValue) =>
       streamStateBox.get(path, defaultValue: defaultValue);
 
   void delete(StreamState streamState) =>

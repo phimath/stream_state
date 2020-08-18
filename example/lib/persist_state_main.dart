@@ -2,6 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:stream_state/stream_state.dart';
 import 'package:stream_state/stream_state_builder.dart';
 
+class Custom {
+  final String name;
+  final int awesomeness;
+
+  Custom({
+    @required this.name,
+    @required this.awesomeness,
+  });
+
+  Custom.fromMap(dynamic map)
+      : name = map['name'],
+        awesomeness = map['awesomeness'];
+
+  Map<String, dynamic> toMap() => {
+        'name': name,
+        'awesomeness': awesomeness,
+      };
+}
+
 class PersistManager {
   /// This is a singleton so that we can easily access our StreamState
   /// obects from anywhere in our code.
@@ -24,6 +43,14 @@ class PersistManager {
     initial: true,
     persist: true,
     persistPath: 'useRedText',
+  );
+
+  var custom = StreamState<Custom>(
+    initial: Custom(name: 'My Persisted Custom Class', awesomeness: 10),
+    persist: true,
+    persistPath: 'custom',
+    serialize: (state) => state.toMap(),
+    deserialize: (serialized) => Custom.fromMap(serialized),
   );
 }
 
@@ -95,6 +122,7 @@ class StreamStateExample extends StatelessWidget {
                   color: PersistManager().useRedText.state ? Colors.red : null),
             ),
           ),
+          Text(PersistManager().custom.state.toMap().toString()),
         ],
       ),
       floatingActionButton: FloatingActionButton(
