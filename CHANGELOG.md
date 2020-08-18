@@ -1,8 +1,9 @@
+## [0.1.1] - 2020-08-17
+
+* Add ability to persist the state of custom classes, by providing the `serialize` and `deserialize` functions
+* Update `persist_state_main.dart` example and readme to show how to do this.
+
 ## [0.1.0] - 2020-08-16
-
-* Move conditional import to adapters to correctly fix web detection
-
-## [0.0.9] - 2020-08-16
 
 * Conditionally import hive to fix pub.dev web support detection
 

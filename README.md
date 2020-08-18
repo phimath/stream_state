@@ -99,6 +99,9 @@ If you modify your state without using `=`, you need to call `StreamState.forceU
 
 
 ## Easy State Persistence (Save variables across App launches)
+
+>There is a 2nd example file called `persist_state_main.dart` that shows different persisted `StreamState` objects, including a persisted Custom Class.
+
 SteamState makes it very easy to persist state across app launches.  To allow `StreamState` objects to persist, you must call `await initStreamStatePersist()` when you start your app.  The easiest way to do this is in your `main()` function like so:
 ```dart
     void main() async {
