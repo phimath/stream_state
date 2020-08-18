@@ -127,10 +127,24 @@ Then you can tell any of your `StreamState` objects to save their state across l
 ```
 The `persistPath` is just a String that uniquely identifies which StreamState object you want to persist.  For simple apps, just using the variable name is fine, but if you have lots of `StreamState` objects that you want to persist, you might want to stay organized by providing a full path like `'/settings/theme/useDarkTheme'`.
 
+
+#### How to reset persisted state back to initial?
+
 You can reset a persisted state back to its initial value with `resetPersist()`:
 ```dart
     counter.resetPersist();
     useRedText.resetPersist();
+```
+
+Or with `forceResetPersist:true`, but be sure not to leave this on as that would always use the initial state on app launch (negating the point of persistence).
+
+```dart
+    var counter = StreamState<int>(
+        initial: 0,
+        persist: true,
+        persistPath: 'counter',
+        forceResetPersist: true, // Be sure not to leave this on!!
+    );
 ```
 
 
@@ -190,7 +204,7 @@ I just wanted to find something that was very simple to grasp and that I could s
 
 Most of the available state management solutions involved very heady concepts and had lots of boilerplate to get started.  
 
-I made this package because it would have made making my first few apps a much more pleasant experience.
+I made this package because it would have made making my first few apps a much more pleasant experience.  All of the design goals of **StreamState** are built around making it as simple and easy to use and learn as possible.
 
 
 ### Do you need help?

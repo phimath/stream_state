@@ -1,3 +1,8 @@
+## [0.1.2] - 2020-08-17
+
+* Explain `forceResetPersist` in readme
+
+
 ## [0.1.1] - 2020-08-17
 
 * Add ability to persist the state of custom classes, by providing the `serialize` and `deserialize` functions
