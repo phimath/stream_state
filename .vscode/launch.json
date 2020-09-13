@@ -18,6 +18,13 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
+        },
+        {
+            "name": "Debug list state",
+            "program": "example/lib/list_state_main.dart",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
         }
     ]
 }
