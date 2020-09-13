@@ -97,6 +97,8 @@ Because the `MultiStreamStateBuilder` is used so often, and it's quite a lot to 
 
 If you modify your state without using `=`, you need to call `StreamState.forceUpdate()` to trigger widget rebuilds.  For example, if your `StreamState` object is a `List` and you call `myStreamStateList.state.add(new_element)`, the `MultiStreamStateBuilder` widgets won't rebuild until you call `myStreamStateList.forceUpdate()`.
 
+Alternatively, instead of directly modifying state with `state =`, you can use `state.update(newValue)`.  This will make it so you don't need to use `forceUpdate()`.
+
 
 ## Easy State Persistence (Save variables across App launches)
 
@@ -209,3 +211,56 @@ I made this package because it would have made making my first few apps a much m
 
 ### Do you need help?
 I'm now a massive fan of Flutter and react style programming. I'm still learning but also want to give back and help others where I can. If you need help implementing this or are struggling with the concepts, feel free to reach out!
+
+
+***
+
+### VSCode Snippets:
+You can add the following VSCode Snippets to help make using this package even easier and faster to use.  To use them, go to File -> Preferences -> User Snippets and then select Dart, and add the snippets:
+
+```
+"MultiStreamStateBuilder": {
+		"prefix": [
+			"mssb"
+		],
+		"body": [
+			"MSSB(",
+			"streamStates:[$1],",
+			"builder: (_) =>"
+		],
+		"description": "Adds a MultiStreamStateBuilder header. Use 'Wrap with Widget' and then select 'Widget: child:' and replace with this snippet."
+	},
+	"StreamState": {
+		"prefix": [
+			"ss"
+		],
+		"body": [
+			"var ${1:name} = StreamState<${2:type}>(initial:${3:initial value});"
+		],
+		"description": "Adds a StreamState object."
+	},
+	"Singleton": {
+		"prefix": [
+			"singleton"
+		],
+		"body": [
+			"class $1 {",
+			"  static final $1 _singleton = $1._internal();",
+			"  factory $1() => _singleton;",
+			"  $1._internal();",
+			"}"
+		],
+		"description": "Creates a singleton manager."
+	}
+```
+
+#### 'Wrap with MSSB' Snippet
+
+I'd like to add 'Wrap with MSSB' to the refactor menu, but that is difficult, so for now I've been using this:
+
+To make an MSSB, first do a 'Refactor / Wrap with Widget', then select:
+```
+widget(
+    child: 
+```
+and then type the snippet: `mssb`.
