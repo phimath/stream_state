@@ -1,3 +1,7 @@
+## [0.1.3] - 2020-08-17
+
+* Add update() method, but didn't recommend in readme.  See discussion: https://github.com/phimath/stream_state/issues/1
+
 ## [0.1.2] - 2020-08-17
 
 * Explain `forceResetPersist` in readme
