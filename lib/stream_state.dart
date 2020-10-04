@@ -92,9 +92,6 @@ class StreamState<T> {
 
   /// If the state is mutated without being set directly (like state.add(), or modifying
   /// a custom classes' attributes, we can call forceUpdate() to trigger changes.
-  ///
-  /// `forceUpdate()` is depreciated.  Please use `update()` instead.
-  @Deprecated('Use set() instead.')
   forceUpdate() => state = state;
 
   /// You can call this method to clear the persisted state from this StreamState object
@@ -110,7 +107,6 @@ class StreamState<T> {
   /// Set the current value of the state.  This will automatically trigger any
   /// StreamStateBuilder or MultiStreamStateBuilder to rebuild.
   ///
-  /// Direct assignment is depreciated.  Please use `update()` instead.
   set state(T value) {
     _current = value;
     _streamController.add(value);
