@@ -1,3 +1,8 @@
+## [0.1.4] - 2020-10-03
+
+* Add derived StreamState.combined() constructor.  See https://github.com/phimath/stream_state/issues/3
+
+
 ## [0.1.3] - 2020-08-17
 
 * Add update() method, but didn't recommend in readme.  See discussion: https://github.com/phimath/stream_state/issues/1
