@@ -25,6 +25,13 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
+        },
+        {
+            "name": "Debug combined state",
+            "program": "example/lib/combined_state_main.dart",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
         }
     ]
 }
