@@ -183,6 +183,35 @@ You can persist custom objects by providing serialization and deserialization fu
 
 StreamState uses [Hive](https://pub.dev/packages/hive) under the hood to persist objects,  so my thanks goes out to [Simon Leier](https://github.com/leisim) for making such an awesome and easy to use package.
 
+## Derived / Combined State
+
+You can derive a combined `StreamState` from other `StreamState` objects with the named constructor `StreamState.combined()`.
+
+You can combine as many `StreamState` objects as you want.  The combiner will give you access to them as a list, but you can also use your `StreamState` objects directly.
+
+Using StreamStates directly:
+
+```dart
+    counterA = StreamState<int>(initial: 0);
+    counterB = StreamState<int>(initial: 0);
+    totalCount = StreamState<int>.combined(
+        [counterA, counterB],
+        (_) => counterA.state + counterB.state,
+    );
+```
+
+Using passed StreamStates:
+```dart
+    counterA = StreamState<int>(initial: 0);
+    counterB = StreamState<int>(initial: 0);
+    totalCount = StreamState<int>.combined(
+        [counterA, counterB],
+        (currentStates) => currentStates[0].state + currentStates[1].state,
+    );
+```
+
+>Note that you can't directly persist a combined `StreamState` (but there shouldn't be a need to do this.)
+
 ## AppManager / Where to store StreamState objects?
 
 For simplicity and ease, the included counter example uses a *singleton* called `AppManager` to store the `StreamState` objects.  This makes it very easy to access your state from anywhere in your app.

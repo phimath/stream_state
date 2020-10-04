@@ -65,6 +65,7 @@ class StreamState<T> {
   /// Build a StreamState with an [initial] value.
   StreamState(
       {@required this.initial,
+      this.combined = false,
       this.persist = false,
       this.persistPath,
       this.forceResetPersist = false,
@@ -90,6 +91,34 @@ class StreamState<T> {
     if (persist) StreamStatePersist().persist(this);
   }
 
+  T Function(List currentStates) combiner;
+
+  List<StreamSubscription> _combinedSubscriptions = [];
+
+  final bool combined;
+
+  /// Use this to derive a StreamState from other StreamStates.  Combiner is a function
+  /// that takes a List of StreamStates and should return the derived state.
+  /// Note that you can't directly persist a combined state (and shouldn't need to).
+  StreamState.combined(List<StreamState> sourceStreamStates, this.combiner)
+      : this.combined = true,
+        this.initial = null,
+        this.persist = false,
+        this.persistPath = null,
+        this.serialize = null,
+        this.deserialize = null,
+        this.forceResetPersist = false {
+    stream = _streamController.stream.asBroadcastStream();
+    _current = this.combiner(sourceStreamStates);
+    for (StreamState streamState in sourceStreamStates) {
+      StreamSubscription subscription = streamState.stream.listen((value) {
+        _current = combiner(sourceStreamStates);
+        _streamController.add(_current);
+      });
+      _combinedSubscriptions.add(subscription);
+    }
+  }
+
   /// If the state is mutated without being set directly (like state.add(), or modifying
   /// a custom classes' attributes, we can call forceUpdate() to trigger changes.
   forceUpdate() => state = state;
@@ -108,11 +137,15 @@ class StreamState<T> {
   /// StreamStateBuilder or MultiStreamStateBuilder to rebuild.
   ///
   set state(T value) {
+    assert(!combined,
+        'You can\'t directly set the state of a combined StreamState. It\'s state is derived from the combiner function.');
     _current = value;
     _streamController.add(value);
   }
 
   void update(T value) {
+    assert(!combined,
+        'You can\'t directly set the state of a combined StreamState. It\'s state is derived from the combiner function.');
     _current = value;
     _streamController.add(value);
   }
